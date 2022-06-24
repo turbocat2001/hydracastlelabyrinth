@@ -21,6 +21,11 @@ static const char* __attribute__((used)) stackcookie = "$STACK: 1000000";
 unsigned long __stack = 1000000;
 #endif
 
+#ifdef _KOLIBRI
+#include <sys/ksys.h>
+#include <libgen.h>
+#endif
+
 void createSaveLocations()
 {	
 	//Force create save data folders	
@@ -42,10 +47,12 @@ void createSaveLocations()
 		strcat(buff, "/.hydracastlelabyrinth");
 		#endif
 		// if exist first?
+		#ifndef _KOLIBRI
 		struct stat sb;
 		if(!(stat(buff, &sb)==0 && S_ISDIR(sb.st_mode)))
 			mkdir(buff, 0777);
 
+		#endif
 	#else
 		//psp, wii
 		mkdir("/data", 0777);
@@ -60,6 +67,10 @@ int fileSynched = 0;
 int main(int argc, char **argv)
 {	
 	//Setup
+	#ifdef _KOLIBRI
+	_ksys_setcwd(dirname(argv[0]));
+	#endif
+
 	#ifdef EMSCRIPTEN
 	// that HEAP32 on &fileSynched looks like a hack, but I needed a way to be sure the DB is read before reading the ini files
 	EM_ASM_INT({
@@ -77,8 +88,7 @@ int main(int argc, char **argv)
 		osSetSpeedupEnable(false);
 	#endif
 	#ifdef _SDL
-	if ( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK ) < 0) {
-		fprintf(stderr, "Error");
+	if ( SDL_Init(SDL_INIT_VIDEO) < 0) {
 		SDL_Delay(5000);
 		exit(EXIT_FAILURE);
 	}
@@ -152,7 +162,7 @@ int main(int argc, char **argv)
 	}
 	printf("Hydra Castle Labyrinth, %s %dx%d scale=x%d%s, using Joystick=%d\n", (wantFullscreen || desktopFS)?"Fullscreen":"Windowed", screenW, screenH, screenScale, getXBRZ()?" xBRZ":"", useJoystick);
 	#endif
-	
+
 	srand(time(NULL));
 	createSaveLocations();
 	
