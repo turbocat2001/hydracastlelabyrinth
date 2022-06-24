@@ -37,6 +37,7 @@ void PHL_AudioInit()
 
 void PHL_AudioClose()
 {
+    SDL_PauseAudio(1);
     SDL_CloseAudio();
 }
 
@@ -100,5 +101,6 @@ void PHL_FreeMusic(PHL_Music snd)
 
 void PHL_FreeSound(PHL_Sound snd)
 {
-    cm_destroy_source(snd);
+    if (snd)
+        cm_destroy_source(snd);
 }
