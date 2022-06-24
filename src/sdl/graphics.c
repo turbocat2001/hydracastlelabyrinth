@@ -1,9 +1,12 @@
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "../PHL.h"
 #include "../game.h"
 #include "../qda.h"
 #include "graphics.h"
 #include "scale.h"
+#include <stdlib.h>
+#include <string.h>
+
 #if defined(__amigaos4__) || defined(__MORPHOS__)
 #include "../amigaos.h"
 #endif
@@ -38,6 +41,9 @@ int getXBRZ()
 
 void setXBRZ(int active)
 {
+#ifdef _KOLIBRI
+	xbrz = 0; // Problems with "xBRZ". Temporarily not used.
+#else
 	if(active) active = 1;
 	if(xbrz==active) return;
 	xbrz = active;
@@ -45,6 +51,7 @@ void setXBRZ(int active)
 	// try to reload everything, but boss ressource will not be reloaded
 	freeImages();
 	loadImages();
+#endif
 }
 
 
@@ -72,6 +79,7 @@ void PHL_GraphicsInit()
 		const SDL_VideoInfo* infos = SDL_GetVideoInfo();
 		screenH = infos->current_h;
 		screenW = infos->current_w;
+
 		if(screenW/320 < screenH/240)
 			screenScale = screenW/320;
 		else
@@ -192,6 +200,7 @@ PHL_Surface PHL_LoadBMP(int index)
 		int count = 0;
 
 		if(getXBRZ()) {
+#ifndef _KOLIBRI
 			Uint32 palette[20][18];
 
 			for (dx = 0; dx < 20; dx++) {
@@ -227,6 +236,7 @@ PHL_Surface PHL_LoadBMP(int index)
 
 			xbrz_scale((void*)tmp, (void*)surf->pixels, w, h, screenScale);
 			free(tmp);
+#endif
 		} else {
 			PHL_RGB palette[20][18];
 
