@@ -10,17 +10,20 @@ int optCursor = 0;
 int lastOption = -1;
 #ifdef _SDL
 int musicType = 1;
+
 int getMusicType()
 {
 	return musicType;
 }
 void setMusicType(int t)
 {
+#ifndef _KOLIBRI
 	if(t!=musicType)
 	{
 		musicType = t;
 		// restart music...
 	}
+#endif
 }
 #endif
 
