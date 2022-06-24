@@ -1,7 +1,7 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "../PHL.h"
 
 extern char quitGame;

@@ -1,5 +1,5 @@
 #include "input.h"
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 Button btnUp = {0}, btnDown = {0}, btnLeft = {0}, btnRight = {0};
 Button btnFaceUp = {0}, btnFaceDown = {0}, btnFaceLeft = {0}, btnFaceRight = {0};

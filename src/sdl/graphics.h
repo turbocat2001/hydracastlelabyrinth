@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #define PHL_Surface SDL_Surface*
 
