@@ -1,14 +1,13 @@
 #ifndef SDLAUDIO_H
 #define SDLAUDIO_H
 
-#include <SDL/SDL_mixer.h>
+#include "../cmixer/cmixer.h"
 
-//#define PHL_Music Mix_Music*
-#define PHL_Sound Mix_Chunk*
+#define PHL_Sound cm_Source*
 typedef struct
 {
     int         loop;
-    Mix_Music*  snd;
+    cm_Source*  snd;
 
 } PHL_Music;
 
