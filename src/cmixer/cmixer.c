@@ -26,6 +26,7 @@
 
 #ifdef _KOLIBRI
 #include <sys/ksys.h>
+#define free _ksys_free
 #endif
 
 #include "cmixer.h"
