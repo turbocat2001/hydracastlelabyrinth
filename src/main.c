@@ -51,7 +51,8 @@ void createSaveLocations()
 		struct stat sb;
 		if(!(stat(buff, &sb)==0 && S_ISDIR(sb.st_mode)))
 			mkdir(buff, 0777);
-
+		#else
+			_ksys_mkdir(buff);
 		#endif
 	#else
 		//psp, wii
@@ -89,7 +90,6 @@ int main(int argc, char **argv)
 	#endif
 	#ifdef _SDL
 	if ( SDL_Init(SDL_INIT_VIDEO) < 0) {
-		SDL_Delay(5000);
 		exit(EXIT_FAILURE);
 	}
 	#if defined(PANDORA) || defined(PYRA) || defined(CHIP) || defined(ODROID)
